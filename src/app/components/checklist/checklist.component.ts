@@ -8,7 +8,7 @@ import { LEVEL_CONFIG } from '../../models/asvs.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.scss']
+  styleUrls: ['./checklist.component.scss'],
 })
 export class ChecklistComponent {
   readonly asvs = inject(AsvsService);

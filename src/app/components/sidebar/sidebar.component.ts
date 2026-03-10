@@ -9,7 +9,7 @@ import { LEVEL_CONFIG } from '../../models/asvs.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
   readonly asvs = inject(AsvsService);

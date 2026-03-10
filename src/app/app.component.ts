@@ -9,15 +9,9 @@ import { AsvsService } from './services/asvs.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    SidebarComponent,
-    ChecklistComponent,
-    RecommendationsComponent,
-  ],
+  imports: [CommonModule, HeaderComponent, SidebarComponent, ChecklistComponent, RecommendationsComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   readonly asvs = inject(AsvsService);

@@ -10,28 +10,34 @@ A security compliance checklist application built with **Angular 21** and powere
 ## Setup
 
 ### 1. Get a Gemini API Key
+
 Go to → **https://aistudio.google.com/apikey** and create a free API key.
 
 ### 2. Add Your Key
+
 Open `src/environments/environment.ts` and paste your key:
+
 ```ts
 export const environment = {
   production: false,
-  geminiApiKey: 'AIza...'   // ← your key here
+  geminiApiKey: 'AIza...', // ← your key here
 };
 ```
 
 ### 3. Install & Run
+
 ```bash
 npm install
 npm start   # → http://localhost:4200
 ```
 
 ## ⚠️ Security
+
 - `src/environments/environment.ts` is in `.gitignore` — **never commit it**
 - For production deployments, inject the key via CI/CD environment variables
 
 ## Project Structure
+
 ```
 src/
 ├── environments/

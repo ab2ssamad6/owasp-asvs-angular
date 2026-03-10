@@ -18,7 +18,7 @@
   <!-- Actions bar -->
   <div class="actions-bar">
     <span class="actions-label">
-      {{ asvs.filteredItems().length }} requirement{{ asvs.filteredItems().length !== 1 ? "s" : "" }}
+      {{ asvs.filteredItems().length }} requirement{{ asvs.filteredItems().length !== 1 ? 's' : '' }}
       @if (asvs.activeCategory()) {
         in {{ asvs.activeCategory() }}
       }
@@ -61,7 +61,12 @@
           <div class="item-body">
             <div class="item-meta">
               <span class="item-id">{{ item.id }}</span>
-              <span class="item-level" [style.color]="levelConfig[item.level].color" [style.background]="levelConfig[item.level].bg">{{ levelConfig[item.level].label }}</span>
+              <span
+                class="item-level"
+                [style.color]="levelConfig[item.level].color"
+                [style.background]="levelConfig[item.level].bg"
+                >{{ levelConfig[item.level].label }}</span
+              >
             </div>
             <div class="item-desc">{{ item.desc }}</div>
           </div>

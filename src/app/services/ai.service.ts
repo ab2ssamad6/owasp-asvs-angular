@@ -21,22 +21,16 @@ export class AiService {
 
   constructor(private http: HttpClient) {}
 
-  getRecommendations(
-    missingItems: MissingItem[],
-    totalItems: number,
-    complianceScore: number
-  ): Observable<string> {
+  getRecommendations(missingItems: MissingItem[], totalItems: number, complianceScore: number): Observable<string> {
     const body: RecommendationsRequest = { missingItems, totalItems, complianceScore };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http
-      .post<RecommendationsResponse>(this.endpoint, body, { headers })
-      .pipe(
-        map(res => res.recommendations || 'No recommendations generated.'),
-        catchError(err => {
-          const msg = err?.error?.error || err?.message || 'Server request failed.';
-          return throwError(() => new Error(msg));
-        })
-      );
+    return this.http.post<RecommendationsResponse>(this.endpoint, body, { headers }).pipe(
+      map((res) => res.recommendations || 'No recommendations generated.'),
+      catchError((err) => {
+        const msg = err?.error?.error || err?.message || 'Server request failed.';
+        return throwError(() => new Error(msg));
+      })
+    );
   }
 }

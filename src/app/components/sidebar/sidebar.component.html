@@ -4,19 +4,14 @@
       class="search-input"
       placeholder="Search requirements…"
       [ngModel]="searchValue"
-      (ngModelChange)="onSearch($event)"
-    />
+      (ngModelChange)="onSearch($event)" />
   </div>
 
   <div class="section">
     <div class="section-title">Level Filter</div>
     <div class="level-chips">
       @for (level of levels; track level) {
-        <button
-          class="level-chip"
-          [class]="getLevelClass(level)"
-          (click)="asvs.toggleLevel(level)"
-        >
+        <button class="level-chip" [class]="getLevelClass(level)" (click)="asvs.toggleLevel(level)">
           {{ levelConfig[level].label }} · {{ levelConfig[level].desc }}
         </button>
       }
@@ -28,24 +23,14 @@
   <div class="section">
     <div class="section-title">Categories</div>
 
-    <button
-      class="cat-btn"
-      [class.active]="!asvs.activeCategory()"
-      (click)="selectCategory(null)"
-    >
+    <button class="cat-btn" [class.active]="!asvs.activeCategory()" (click)="selectCategory(null)">
       <span class="cat-id">ALL</span>
       <span class="cat-name">All Categories</span>
-      <span class="cat-count">
-        {{ asvs.checkedCount() }}/{{ asvs.totalItems() }}
-      </span>
+      <span class="cat-count"> {{ asvs.checkedCount() }}/{{ asvs.totalItems() }} </span>
     </button>
 
     @for (cat of asvs.categories; track cat.id) {
-      <button
-        class="cat-btn"
-        [class.active]="asvs.activeCategory() === cat.id"
-        (click)="selectCategory(cat.id)"
-      >
+      <button class="cat-btn" [class.active]="asvs.activeCategory() === cat.id" (click)="selectCategory(cat.id)">
         <span class="cat-id">{{ cat.id }}</span>
         <span class="cat-name">{{ cat.title }}</span>
         <span class="cat-count">

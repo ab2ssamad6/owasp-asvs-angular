@@ -7,13 +7,15 @@ import { AsvsService } from '../../services/asvs.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
   readonly asvs = inject(AsvsService);
   @Output() analyze = new EventEmitter<void>();
 
-  get circumference() { return 2 * Math.PI * 20; }
+  get circumference() {
+    return 2 * Math.PI * 20;
+  }
 
   get strokeDashoffset() {
     return this.circumference * (1 - this.asvs.complianceScore() / 100);

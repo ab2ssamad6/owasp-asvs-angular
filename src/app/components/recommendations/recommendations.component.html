@@ -55,11 +55,21 @@
       <div class="markdown-content">
         @for (line of parsedLines; track $index) {
           @switch (line.type) {
-            @case ('h2') { <div class="md-h2">{{ line.content }}</div> }
-            @case ('h3') { <div class="md-h3">{{ line.content }}</div> }
-            @case ('li') { <div class="md-li">{{ line.content }}</div> }
-            @case ('space') { <div class="md-space"></div> }
-            @default { <div class="md-p">{{ line.content }}</div> }
+            @case ('h2') {
+              <div class="md-h2">{{ line.content }}</div>
+            }
+            @case ('h3') {
+              <div class="md-h3">{{ line.content }}</div>
+            }
+            @case ('li') {
+              <div class="md-li">{{ line.content }}</div>
+            }
+            @case ('space') {
+              <div class="md-space"></div>
+            }
+            @default {
+              <div class="md-p">{{ line.content }}</div>
+            }
           }
         }
       </div>

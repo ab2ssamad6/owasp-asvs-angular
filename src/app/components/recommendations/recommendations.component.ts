@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges,ChangeDetectorRef } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AsvsService } from '../../services/asvs.service';
 import { AiService } from '../../services/ai.service';
@@ -14,7 +14,7 @@ interface MarkdownLine {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './recommendations.component.html',
-  styleUrls: ['./recommendations.component.scss']
+  styleUrls: ['./recommendations.component.scss'],
 })
 export class RecommendationsComponent implements OnChanges {
   @Input() open = false;
@@ -22,18 +22,15 @@ export class RecommendationsComponent implements OnChanges {
 
   readonly asvs = inject(AsvsService);
   private readonly aiService = inject(AiService);
-     private readonly cdr=  inject(ChangeDetectorRef) 
-
-
+  private readonly cdr = inject(ChangeDetectorRef);
 
   loading = false;
   rawMarkdown = '';
   errorMsg = '';
   missingSnapshot: MissingItem[] = [];
-  
 
   get parsedLines(): MarkdownLine[] {
-    return this.rawMarkdown.split('\n').map(line => {
+    return this.rawMarkdown.split('\n').map((line) => {
       if (line.startsWith('## ')) return { type: 'h2', content: line.slice(3) };
       if (line.startsWith('### ')) return { type: 'h3', content: line.slice(4) };
       if (line.startsWith('# ')) return { type: 'h2', content: line.slice(2) };
@@ -52,7 +49,8 @@ export class RecommendationsComponent implements OnChanges {
   analyze(): void {
     const missing = this.asvs.missingItems();
     if (missing.length === 0) {
-      this.rawMarkdown = '## 🎉 Full Compliance Achieved!\n\nAll OWASP ASVS requirements are implemented. Your application meets the standard.';
+      this.rawMarkdown =
+        '## 🎉 Full Compliance Achieved!\n\nAll OWASP ASVS requirements are implemented. Your application meets the standard.';
       return;
     }
 
@@ -61,26 +59,19 @@ export class RecommendationsComponent implements OnChanges {
     this.errorMsg = '';
     this.loading = true;
 
-    this.aiService.getRecommendations(
-      missing,
-      this.asvs.totalItems(),
-      this.asvs.complianceScore()
-    ).subscribe({
-      next: text => {
-          this.rawMarkdown = text;
-          this.loading = false;
-          this.errorMsg = '';
-this.cdr.detectChanges();  
-
+    this.aiService.getRecommendations(missing, this.asvs.totalItems(), this.asvs.complianceScore()).subscribe({
+      next: (text) => {
+        this.rawMarkdown = text;
+        this.loading = false;
+        this.errorMsg = '';
+        this.cdr.detectChanges();
       },
-      error: err => {
+      error: (err) => {
+        this.errorMsg = err.message;
+        this.loading = false;
 
-          this.errorMsg = err.message;
-          this.loading = false;
-
-          this.cdr.detectChanges();  
-
-      }
+        this.cdr.detectChanges();
+      },
     });
   }
 
