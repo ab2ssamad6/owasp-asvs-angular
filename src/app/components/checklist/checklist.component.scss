@@ -1,7 +1,13 @@
+:host {
+  display: block;
+  background: var(--bg);
+  height: 100%;
+  overflow-y: auto;
+}
+
 .checklist-wrapper {
   padding: 24px;
-  background: var(--bg);
-  overflow-y: auto;
+  min-height: 100%;
 }
 
 .global-stats {
@@ -108,6 +114,7 @@
   border: 1px solid var(--border-b);
   padding: 3px 8px;
   border-radius: 4px;
+  flex-shrink: 0;
 }
 
 .cat-title {
@@ -124,6 +131,7 @@
   background: var(--surface2);
   border-radius: 2px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .progress-fill {
@@ -136,8 +144,9 @@
 .progress-pct {
   font-size: 11px;
   color: var(--muted);
-  min-width: 32px;
+  min-width: 36px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .item {
@@ -190,7 +199,7 @@
   font-weight: 900;
 }
 
-.item-body { flex: 1; }
+.item-body { flex: 1; min-width: 0; }
 
 .item-meta {
   display: flex;
@@ -203,6 +212,7 @@
   font-size: 10px;
   color: var(--muted);
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .item-level {
@@ -212,6 +222,7 @@
   border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  flex-shrink: 0;
 }
 
 .item-desc {

@@ -1,10 +1,37 @@
 .app-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 60px 1fr;
   min-height: 100vh;
+  background: var(--bg);
 
+  // Header spans both columns
+  app-header {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  // Sidebar occupies left column, second row
+  app-sidebar {
+    grid-column: 1;
+    grid-row: 2;
+    display: block;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+    position: sticky;
+    top: 60px;
+    align-self: start;
+  }
+
+  // Checklist occupies right column, second row
   app-checklist {
+    grid-column: 2;
+    grid-row: 2;
+    display: block;
     overflow-y: auto;
     height: calc(100vh - 60px);
   }
