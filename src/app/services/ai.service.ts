@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { GoogleGenAI } from '@google/genai';
 import { MissingItem } from '../models/asvs.model';
 import { ASVS_DATA } from '../data/asvs-data';
-
-interface AnthropicResponse {
-  content: Array<{ type: string; text?: string }>;
-}
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AiService {
-  // In development, requests go through Angular's proxy → api.anthropic.com
-  // The proxy (proxy.conf.json) handles the API key and CORS
-  private readonly API_URL = '/api/anthropic/v1/messages';
-  private readonly MODEL = 'claude-sonnet-4-20250514';
-
-  constructor(private http: HttpClient) {}
+  private readonly client = new GoogleGenAI({ apiKey: environment.geminiApiKey });
+  private readonly MODEL = 'gemini-2.5-flash';
 
   getRecommendations(
     missingItems: MissingItem[],
@@ -50,18 +43,17 @@ Provide structured, actionable security recommendations organized by category. F
 Format your response in Markdown with ## for category headers and ### for sub-sections.
 Prioritize L1 (critical/opportunistic) items first. Be practical and developer-focused.`;
 
-    // Content-Type is enough — the API key is injected by the proxy
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const request = this.client.models
+      .generateContent({
+        model: this.MODEL,
+        contents: prompt,
+      })
+      .then(res => res.text ?? 'No recommendations generated.');
 
-    const body = {
-      model: this.MODEL,
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }]
-    };
-
-    return this.http.post<AnthropicResponse>(this.API_URL, body, { headers }).pipe(
-      map(res => res.content?.map(b => b.text || '').join('\n') || 'No recommendations generated.'),
-      catchError(err => throwError(() => new Error(err.message || 'Failed to fetch recommendations')))
+    return from(request).pipe(
+      catchError(err =>
+        throwError(() => new Error(err?.message || 'Gemini request failed'))
+      )
     );
   }
 }
