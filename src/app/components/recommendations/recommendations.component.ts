@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AsvsService } from '../../services/asvs.service';
 import { AiService } from '../../services/ai.service';
@@ -22,11 +22,15 @@ export class RecommendationsComponent implements OnChanges {
 
   readonly asvs = inject(AsvsService);
   private readonly aiService = inject(AiService);
+     private readonly cdr=  inject(ChangeDetectorRef) 
+
+
 
   loading = false;
   rawMarkdown = '';
   errorMsg = '';
   missingSnapshot: MissingItem[] = [];
+  
 
   get parsedLines(): MarkdownLine[] {
     return this.rawMarkdown.split('\n').map(line => {
@@ -63,12 +67,19 @@ export class RecommendationsComponent implements OnChanges {
       this.asvs.complianceScore()
     ).subscribe({
       next: text => {
-        this.rawMarkdown = text;
-        this.loading = false;
+          this.rawMarkdown = text;
+          this.loading = false;
+          this.errorMsg = '';
+this.cdr.detectChanges();  
+
       },
       error: err => {
-        this.errorMsg = err.message;
-        this.loading = false;
+
+          this.errorMsg = err.message;
+          this.loading = false;
+
+          this.cdr.detectChanges();  
+
       }
     });
   }
