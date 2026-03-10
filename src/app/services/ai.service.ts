@@ -11,7 +11,9 @@ interface AnthropicResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AiService {
-  private readonly API_URL = 'https://api.anthropic.com/v1/messages';
+  // In development, requests go through Angular's proxy → api.anthropic.com
+  // The proxy (proxy.conf.json) handles the API key and CORS
+  private readonly API_URL = '/api/anthropic/v1/messages';
   private readonly MODEL = 'claude-sonnet-4-20250514';
 
   constructor(private http: HttpClient) {}
@@ -48,6 +50,7 @@ Provide structured, actionable security recommendations organized by category. F
 Format your response in Markdown with ## for category headers and ### for sub-sections.
 Prioritize L1 (critical/opportunistic) items first. Be practical and developer-focused.`;
 
+    // Content-Type is enough — the API key is injected by the proxy
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     const body = {

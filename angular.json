@@ -46,14 +46,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": { "buildTarget": "owasp-asvs-checker:build:production" },
-            "development": { "buildTarget": "owasp-asvs-checker:build:development" }
+            "development": {
+              "buildTarget": "owasp-asvs-checker:build:development",
+              "proxyConfig": "proxy.conf.json"
+            }
           },
           "defaultConfiguration": "development"
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

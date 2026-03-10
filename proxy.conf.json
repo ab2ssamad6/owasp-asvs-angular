@@ -1,0 +1,14 @@
+{
+  "/api/anthropic": {
+    "target": "https://api.anthropic.com",
+    "changeOrigin": true,
+    "secure": true,
+    "pathRewrite": {
+      "^/api/anthropic": ""
+    },
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "YOUR_API_KEY_HERE"
+    }
+  }
+}
