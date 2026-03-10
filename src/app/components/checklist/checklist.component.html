@@ -1,0 +1,72 @@
+<div class="checklist-wrapper">
+  <!-- Stats -->
+  <div class="global-stats">
+    <div class="stat-card">
+      <div class="stat-val" style="color: var(--green)">{{ asvs.checkedCount() }}</div>
+      <div class="stat-lbl">Implemented</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color: var(--red)">{{ asvs.totalItems() - asvs.checkedCount() }}</div>
+      <div class="stat-lbl">Missing</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color: var(--accent)">{{ asvs.categories.length }}</div>
+      <div class="stat-lbl">Categories</div>
+    </div>
+  </div>
+
+  <!-- Actions bar -->
+  <div class="actions-bar">
+    <span class="actions-label">
+      {{ asvs.filteredItems().length }} requirement{{ asvs.filteredItems().length !== 1 ? "s" : "" }}
+      @if (asvs.activeCategory()) {
+        in {{ asvs.activeCategory() }}
+      }
+      @if (asvs.searchQuery()) {
+        · "{{ asvs.searchQuery() }}"
+      }
+    </span>
+    <button class="btn btn-ghost" (click)="asvs.clearAllVisible()">Clear</button>
+    <button class="btn btn-ghost" (click)="asvs.selectAllVisible()">Select All</button>
+  </div>
+
+  <!-- Empty state -->
+  @if (asvs.visibleCategories().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-title">No requirements found</div>
+      <div class="empty-sub">Try adjusting your search or level filters</div>
+    </div>
+  }
+
+  <!-- Category sections -->
+  @for (cat of asvs.visibleCategories(); track cat.id) {
+    <div class="cat-section">
+      <div class="cat-header">
+        <span class="cat-badge">{{ cat.id }}</span>
+        <span class="cat-title">{{ cat.title }}</span>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="asvs.categoryStats()[cat.id].pct"></div>
+        </div>
+        <span class="progress-pct">{{ asvs.categoryStats()[cat.id].pct }}%</span>
+      </div>
+
+      @for (item of cat.items; track item.id) {
+        <div class="item" [class.checked]="isChecked(item.id)" (click)="asvs.toggleItem(item.id)">
+          <div class="item-check">
+            @if (isChecked(item.id)) {
+              <span class="check-mark">✓</span>
+            }
+          </div>
+          <div class="item-body">
+            <div class="item-meta">
+              <span class="item-id">{{ item.id }}</span>
+              <span class="item-level" [style.color]="levelConfig[item.level].color" [style.background]="levelConfig[item.level].bg">{{ levelConfig[item.level].label }}</span>
+            </div>
+            <div class="item-desc">{{ item.desc }}</div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

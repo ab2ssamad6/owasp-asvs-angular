@@ -1,0 +1,247 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 190;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+
+  &.open { opacity: 1; pointer-events: all; }
+}
+
+.panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 540px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  z-index: 200;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &.open { transform: translateX(0); }
+}
+
+.panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 1;
+}
+
+.panel-label {
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.close-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-family: monospace;
+  transition: all 0.15s;
+
+  &:hover { color: var(--text); border-color: var(--border-b); }
+}
+
+.panel-body {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+// Loading
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  gap: 16px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.spinner-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+// Error
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 12px;
+}
+
+.error-icon { font-size: 32px; }
+
+.error-msg {
+  font-size: 12px;
+  color: var(--red);
+  text-align: center;
+}
+
+.btn-retry {
+  padding: 8px 16px;
+  background: rgba(248,113,113,.15);
+  border: 1px solid rgba(248,113,113,.3);
+  color: var(--red);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.15s;
+
+  &:hover { background: rgba(248,113,113,.25); }
+}
+
+// Meta
+.meta-chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+// Missing preview
+.missing-preview {
+  margin-bottom: 20px;
+}
+
+.missing-title {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.missing-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  background: rgba(248,113,113,.06);
+  border: 1px solid rgba(248,113,113,.15);
+}
+
+.missing-id {
+  font-size: 10px;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.missing-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.missing-more {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 6px 12px;
+}
+
+// Markdown
+.markdown-content { }
+
+.md-h2 {
+  font-family: 'Syne', sans-serif;
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.md-h3 {
+  font-family: 'Syne', sans-serif;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+
+.md-p {
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.md-li {
+  padding: 2px 0 2px 16px;
+  position: relative;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text);
+  opacity: 0.85;
+
+  &::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 4px;
+  }
+}
+
+.md-space { height: 6px; }

@@ -1,0 +1,68 @@
+<!-- Overlay -->
+<div class="overlay" [class.open]="open" (click)="close.emit()"></div>
+
+<!-- Panel -->
+<div class="panel" [class.open]="open">
+  <div class="panel-header">
+    <div>
+      <div class="panel-label">AI Security Analysis</div>
+      <div class="panel-title">Recommendations</div>
+    </div>
+    <button class="close-btn" (click)="close.emit()">×</button>
+  </div>
+
+  <div class="panel-body">
+    <!-- Loading -->
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <div class="spinner-label">Analyzing {{ missingSnapshot.length }} missing requirements…</div>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (!loading && errorMsg) {
+      <div class="error-state">
+        <div class="error-icon">⚠️</div>
+        <div class="error-msg">{{ errorMsg }}</div>
+        <button class="btn-retry" (click)="retry()">Retry</button>
+      </div>
+    }
+
+    <!-- Results -->
+    @if (!loading && !errorMsg && rawMarkdown) {
+      <div class="meta-chips">
+        <span class="chip">⚠ {{ missingSnapshot.length }} Missing</span>
+        <span class="chip">✓ {{ asvs.checkedCount() }} Done</span>
+        <span class="chip">{{ asvs.complianceScore() }}% Score</span>
+      </div>
+
+      <!-- Missing items preview -->
+      <div class="missing-preview">
+        <div class="missing-title">Missing Requirements ({{ missingSnapshot.length }})</div>
+        @for (item of previewMissing; track item.id) {
+          <div class="missing-item">
+            <div class="missing-id">{{ item.id }} · L{{ item.level }} · {{ item.catTitle }}</div>
+            <div class="missing-desc">{{ item.desc }}</div>
+          </div>
+        }
+        @if (extraCount > 0) {
+          <div class="missing-more">+ {{ extraCount }} more requirements analyzed…</div>
+        }
+      </div>
+
+      <!-- Rendered Markdown -->
+      <div class="markdown-content">
+        @for (line of parsedLines; track $index) {
+          @switch (line.type) {
+            @case ('h2') { <div class="md-h2">{{ line.content }}</div> }
+            @case ('h3') { <div class="md-h3">{{ line.content }}</div> }
+            @case ('li') { <div class="md-li">{{ line.content }}</div> }
+            @case ('space') { <div class="md-space"></div> }
+            @default { <div class="md-p">{{ line.content }}</div> }
+          }
+        }
+      </div>
+    }
+  </div>
+</div>

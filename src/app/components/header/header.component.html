@@ -1,0 +1,39 @@
+<header class="header">
+  <div class="brand">
+    <div class="logo">A</div>
+    <div>
+      <div class="title">OWASP ASVS Checker</div>
+      <div class="subtitle">Application Security Verification Standard</div>
+    </div>
+  </div>
+
+  <div class="score-area">
+    <div class="score-text">
+      <div class="score-pct" [style.color]="asvs.scoreColor()">
+        {{ asvs.complianceScore() }}%
+      </div>
+      <div class="score-label">
+        Compliance · {{ asvs.checkedCount() }}/{{ asvs.totalItems() }}
+      </div>
+    </div>
+
+    <div class="score-ring">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="3"/>
+        <circle
+          cx="24" cy="24" r="20" fill="none"
+          [attr.stroke]="asvs.scoreColor()"
+          stroke-width="3"
+          stroke-linecap="round"
+          [attr.stroke-dasharray]="circumference"
+          [attr.stroke-dashoffset]="strokeDashoffset"
+          class="ring-progress"
+        />
+      </svg>
+    </div>
+
+    <button class="btn-analyze" (click)="analyzeClick()">
+      ⚡ AI Analyze
+    </button>
+  </div>
+</header>
