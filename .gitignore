@@ -57,5 +57,3 @@ baseline.json
 
 # pnpm store
 .pnpm-store
-
-src/environments/environment.ts
