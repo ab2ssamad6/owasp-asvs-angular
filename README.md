@@ -1,11 +1,10 @@
-# OWASP ASVS Checker — Angular 17 + Gemini 2.5 Flash
+# OWASP ASVS Checker — Angular 21 + Gemini 2.5 Flash
 
-A security compliance checklist application built with **Angular 17** and powered by **Google Gemini 2.5 Flash** for AI recommendations.
+A security compliance checklist application built with **Angular 21** and powered by **Google Gemini 2.5 Flash** for AI recommendations.
 
 ## Tech Stack
 
-- **Angular 17** — Standalone Components + Signals
-- **@google/genai** — Google Gemini 2.5 Flash API
+- **Angular 21** — Standalone Components + Signals
 - **SCSS** — Component-scoped styling with CSS variables
 
 ## Setup
